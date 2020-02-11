@@ -1,0 +1,24 @@
+{
+  "name": "http-api-assignment-ii",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wallace1313525/http-api-assignment-ii.git"
+  },
+  "author": "Wallace Wallace",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Wallace1313525/http-api-assignment-ii/issues"
+  },
+  "homepage": "https://github.com/Wallace1313525/http-api-assignment-ii#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.20.0"
+  },
+}
