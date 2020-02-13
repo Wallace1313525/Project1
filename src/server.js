@@ -3,7 +3,7 @@ const http = require('http'); //pull in http module
 //url module for parsing url string
 const url = require('url'); 
 //querystring module for parsing querystrings from url
-const query = require('querystring');
+//const query = require('querystring');
 //pull in our custom files
 const htmlHandler = require('./HTMLHandler.js');
 const jsonHandler = require('./JSONHandler.js');
@@ -33,6 +33,45 @@ const onRequest = (request, response) => {
     handlePost(request, response, parsedUrl);
   } else {
     handleGet(request, response, parsedUrl);
+  }
+};
+
+const handlePost = (request, response, parsedUrl) => {
+  //if post is to /addUser (our only POST url)
+  if (parsedUrl.pathname === '/addUser') {
+    const res = response;
+
+    //uploads come in as a byte stream that we need 
+    //to reassemble once it's all arrived
+    const body = [];
+
+    //if the upload stream errors out, just throw a
+    //a bad request and send it back 
+    request.on('error', (err) => {
+      console.dir(err);
+      res.statusCode = 400;
+      res.end();
+    });
+
+    //on 'data' is for each byte of data that comes in
+    //from the upload. We will add it to our byte array.
+    request.on('data', (chunk) => {
+      body.push(chunk); 
+    });
+
+    //on end of upload stream. 
+    request.on('end', () => {
+      //combine our byte array (using Buffer.concat)
+      //and convert it to a string value (in this instance)
+      const bodyString = Buffer.concat(body).toString();
+      //since we are getting x-www-form-urlencoded data
+      //the format will be the same as querystrings
+      //Parse the string into an object by field name
+      const bodyParams = query.parse(bodyString);
+
+      //pass to our addUser function
+      jsonHandler.addUser(request, res, bodyParams);
+    });
   }
 };
 
