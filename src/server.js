@@ -17,8 +17,12 @@ const handleGet = (request, response, parsedUrl) => {
     htmlHandler.getCSS(request, response);
   } else if (parsedUrl.pathname === '/getUsers') {
     jsonHandler.getUsers(request, response);
-  } else {
-    htmlHandler.getIndex(request, response);
+  } 
+    else if(parsedUrl.pathname === '/'){
+    htmlHandler.getIndex(request, response);  
+    }
+    else {
+    jsonHandler.notFound(request, response);
   }
 };
 

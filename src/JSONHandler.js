@@ -19,6 +19,13 @@ const getUsers = (request, response) => {
   respondJSON(request, response, 200, responseJSON);
 };
 
+const notFound = (request, response) => {
+    const responseJSON = {
+    message: 'Page not found'
+  };
+  respondJSON(request, response, 404, responseJSON);
+};
+
 
 
 const addUser = (request, response, body) => {
@@ -68,5 +75,6 @@ const addUser = (request, response, body) => {
 //public exports
 module.exports = {
   getUsers,
-  addUser
+  addUser,
+  notFound
 };
