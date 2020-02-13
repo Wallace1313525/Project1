@@ -3,7 +3,7 @@ const http = require('http'); //pull in http module
 //url module for parsing url string
 const url = require('url'); 
 //querystring module for parsing querystrings from url
-//const query = require('querystring');
+const query = require('querystring');
 //pull in our custom files
 const htmlHandler = require('./HTMLHandler.js');
 const jsonHandler = require('./JSONHandler.js');
@@ -22,19 +22,6 @@ const handleGet = (request, response, parsedUrl) => {
   }
 };
 
-const onRequest = (request, response) => {
-  //parse url into individual parts
-  //returns an object of url parts by name
-  const parsedUrl = url.parse(request.url);
-
-  //check if method was POST, otherwise assume GET 
-  //for the sake of this example
-  if (request.method === 'POST') {
-    handlePost(request, response, parsedUrl);
-  } else {
-    handleGet(request, response, parsedUrl);
-  }
-};
 
 const handlePost = (request, response, parsedUrl) => {
   //if post is to /addUser (our only POST url)
@@ -72,6 +59,20 @@ const handlePost = (request, response, parsedUrl) => {
       //pass to our addUser function
       jsonHandler.addUser(request, res, bodyParams);
     });
+  }
+};
+
+const onRequest = (request, response) => {
+  //parse url into individual parts
+  //returns an object of url parts by name
+  const parsedUrl = url.parse(request.url);
+
+  //check if method was POST, otherwise assume GET 
+  //for the sake of this example
+  if (request.method === 'POST') {
+    handlePost(request, response, parsedUrl);
+  } else {
+    handleGet(request, response, parsedUrl);
   }
 };
 
