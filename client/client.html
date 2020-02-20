@@ -3,7 +3,10 @@
 <head>
   <title>Our simple HTTP server</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
-  
+  <script type="text/javascript">
+      document.getElementById("inputBut").addEventListener("click", function(){ alert("Hello World!"); });
+  </script>
+    
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   <script type="text/babel">
 const parseJSON = (xhr, content) => {
@@ -161,7 +164,7 @@ const init = () => {
       <input id="nameField" type="text" name="name" />
       <label for="age">Age: </label>
       <input id="ageField" type="number" name="age" min="0" max="100" step="1"/>
-      <input type="submit" value="Add User" />
+      <input type="submit" value="Add User" id="inputBut"/>
     </form>
     <form id="userForm" action="/getUsers" method="get">
       <select id='urlField'>
@@ -172,7 +175,7 @@ const init = () => {
         <option value="get">GET</option>
         <option value="head">HEAD</option>
       </select>
-      <input type="submit" value="Get User" />
+      <input type="submit" value="Get User"/>
     </form>
   </section>
   <section id="content">
