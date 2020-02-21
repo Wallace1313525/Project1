@@ -43,7 +43,7 @@ const addUser = (request, response, body) => {
     return respondJSON(request, response, 400, responseJSON);
   }
     var urlString = body.age;
-  if (urlString.charAt(0) != "h" && urlString.charAt(1) != "t" && urlString.charAt(2) != "t" && urlString.charAt(3) != "p") {
+  if (urlString.charAt(0) !== "h" && urlString.charAt(1) !== "t" && urlString.charAt(2) !== "t" && urlString.charAt(3) !== "p") {
     responseJSON.id = 'Invalid Link';
       responseJSON.message = 'Please have the link start with http';
     return respondJSON(request, response, 400, responseJSON);
