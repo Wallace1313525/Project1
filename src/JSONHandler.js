@@ -15,7 +15,6 @@ const getUsers = (request, response) => {
   const responseJSON = {
     users,
   };
-  console.log("Got user data");
     
   respondJSON(request, response, 200, responseJSON);
 };
