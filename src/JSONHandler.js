@@ -15,6 +15,7 @@ const getUsers = (request, response) => {
   const responseJSON = {
     users,
   };
+  console.log("Got user data");
     
   respondJSON(request, response, 200, responseJSON);
 };
@@ -42,7 +43,14 @@ const addUser = (request, response, body) => {
     responseJSON.id = 'missingParams';
     return respondJSON(request, response, 400, responseJSON);
   }
+    var urlString = body.age;
+  if (urlString.charAt(0) != "h" && urlString.charAt(1) != "t" && urlString.charAt(2) != "t" && urlString.charAt(3) != "p") {
+    responseJSON.id = 'Invalid Link';
+      responseJSON.message = 'Please have the link start with http';
+    return respondJSON(request, response, 400, responseJSON);
+  }
 
+  
   //default status code to 201 created
   let responseCode = 201;
 
@@ -62,7 +70,14 @@ const addUser = (request, response, body) => {
   //if response is created, then set our created message
   //and sent response with a message
   if (responseCode === 201) {
-    responseJSON.message = 'Created Successfully';
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+
+      today = mm + '/' + dd + '/' + yyyy;
+
+    responseJSON.message = `Created Successfully on ${today}`;
     return respondJSON(request, response, responseCode, responseJSON);
   }
   // 204 has an empty payload, just a success
