@@ -33,6 +33,7 @@ const addUser = (request, response, body) => {
   const responseJSON = {
     message: 'Name and age are both required.',
   };
+    
 
   //check to make sure we have both fields
   //We might want more validation than just checking if they exist
