@@ -11,8 +11,8 @@ const parseJSON = (xhr, content) => {
         }
       //parse response (obj will be empty in a 204 updated)
     
-      const obj = JSON.parse(xhr.response);
-      console.dir(obj);
+      //const obj = JSON.parse(xhr.response);
+      //console.dir(obj);
       
       //if message in response, add to screen
       if(obj.message) {
@@ -23,11 +23,14 @@ const parseJSON = (xhr, content) => {
       
       //if users in response, add to screen
       if(obj.users) {
-        const userList = document.createElement('p');
+        /*const userList = document.createElement('p');
         const users = JSON.stringify(obj.users);
         userList.textContent = users;
-        content.appendChild(userList);
+        content.appendChild(userList);*/
+        document.getElementById("results").innerHTML += "<p>" + obj.name + "</p>";
       }
+    
+
     };
 
 const handleResponse = (xhr) => {
@@ -68,9 +71,10 @@ const handleResponse = (xhr) => {
       const nameAction = nameForm.getAttribute('action');
       const nameMethod = nameForm.getAttribute('method');
       
-      //grab the form's name and age fields so we can check user input
+      //grab the form's name and link fields so we can check user input
       const nameField = nameForm.querySelector('#nameField');
-      const ageField = nameForm.querySelector('#ageField');
+      const linkField = nameForm.querySelector('#linkField');
+      const descField = nameForm.querySelector('#descField');
       
       //create a new Ajax request (remember this is asynchronous)
       const xhr = new XMLHttpRequest();
@@ -93,10 +97,10 @@ const handleResponse = (xhr) => {
       //The format is the same as query strings, so key=value&key2=value2
       //The 'name' fields from the inputs are the variable names sent to
       //the server. 
-      //So ours might look like  name=test&age=22
+      //So ours might look like  name=test&link=22
       //Again the 'name' fields in the form are the variable names in the string
       //and the variable names the server will look for.
-      const formData = `name=${nameField.value}&age=${ageField.value}`;
+      const formData = `name=${nameField.value}&link=${linkField.value}&desc=${descField.value}`;
       
       //send our request with the data
       xhr.send(formData);
@@ -159,8 +163,10 @@ const init = () => {
     <form id="nameForm" action="/addUser" method="post">
       <label for="name">Title: </label>
       <input id="nameField" type="text" name="name" />
-      <label for="age">Video URL: </label>
-      <input id="ageField" type="text" name="age"/>
+      <label for="link">Video URL: </label>
+      <input id="linkField" type="text" name="link"/>
+      <label for="desc">Short Description: </label>
+      <input id="descField" type="text" name="desc" maxlength="100"/>
       <input type="submit" value="Add User" id="inputBut"/>
     </form>
       <p></p>
@@ -177,6 +183,8 @@ const init = () => {
     </form>
   </section>
   <section id="content">
+  </section>
+  <section id="results">
   </section>
 </section>
 </body>
