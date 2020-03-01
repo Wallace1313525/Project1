@@ -3,8 +3,7 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
-  background:url(https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.stargatecinema.com%2Fhome-theater-carpet%2F&psig=AOvVaw3rkDGox5Ra62px_BJFBp7U&ust=1583105674206000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMiS-q329-cCFQAAAAAdAAAAABAD);
-  background-repeat: repeat;
+  background-image: linear-gradient(orange, yellow);
 }
 
 #top {
@@ -23,7 +22,8 @@ html, body {
 }
 
 #boxedContent{
-    background-color: aliceblue;
+    padding: 20px;
+    background-color: rgba(255, 228, 196, .5);
     border-radius: 25px;
     width: 75vw;
     position: fixed;

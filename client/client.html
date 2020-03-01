@@ -11,8 +11,8 @@ const parseJSON = (xhr, content) => {
         }
       //parse response (obj will be empty in a 204 updated)
     
-      //const obj = JSON.parse(xhr.response);
-      //console.dir(obj);
+      const obj = JSON.parse(xhr.response);
+      console.dir(obj.users);
       
       //if message in response, add to screen
       if(obj.message) {
@@ -27,7 +27,12 @@ const parseJSON = (xhr, content) => {
         const users = JSON.stringify(obj.users);
         userList.textContent = users;
         content.appendChild(userList);*/
-        document.getElementById("results").innerHTML += "<p>" + obj.name + "</p>";
+          const usernames = Object.keys(obj.users);
+          for(let username of usernames){
+              const user = obj.users[username];
+              document.getElementById("results").innerHTML += "<p>" + user.name + "</p>";
+              
+          }
       }
     
 
@@ -158,7 +163,8 @@ const init = () => {
 </head>
 <body>
 <section id="boxedContent">
-    <img src="https://play.google.com/store/apps/details?id=hd.video.player&hl=en_US">
+    <center>
+    <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fblankonblank.org%2Fwp-content%2Fuploads%2F2014%2F02%2FLarge_Play_Button_Red.png&f=1&nofb=1" width="20%" height="20%"></center>
   <section id="top">
     <h3>Video Sharer</h3>
     <form id="nameForm" action="/addUser" method="post">
