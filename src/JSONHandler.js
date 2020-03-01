@@ -45,11 +45,15 @@ const addUser = (request, response, body) => {
     return respondJSON(request, response, 400, responseJSON);
   }
     var urlString = body.link;
-  if (urlString.charAt(0) !== "h" && urlString.charAt(1) !== "t" && urlString.charAt(2) !== "t" && urlString.charAt(3) !== "p") {
-    responseJSON.id = 'Invalid Link';
-      responseJSON.message = 'Please have the link start with http://';
-    return respondJSON(request, response, 400, responseJSON);
-  }
+
+    if(urlString.startsWith("https://www.youtube.com/",0)){
+   
+    }
+    else{
+        responseJSON.id = 'Invalid Link';
+        responseJSON.message = "Please have the link start with 'http://youtube.com/'";
+        return respondJSON(request, response, 400, responseJSON);
+    }
 
   
   //default status code to 201 created
