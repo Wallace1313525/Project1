@@ -37,7 +37,8 @@ const parseJSON = (xhr, content) => {
                   }else{//if there is something in the search box
                       const originalString = user.name;
                       const checkString = originalString.toLowerCase();
-                      if(checkString.includes(searchTerm)){//if it includes the search term, add it
+                      const checkSearch = searchTerm.toLowerCase();
+                      if(checkString.includes(checkSearch)){//if it includes the search term, add it
                           const uneditedLink = user.link
                             const endingLink = uneditedLink.split("https://www.youtube.com/watch?v=");
                             const doneLink = "https://www.youtube.com/embed/" + endingLink[1];
@@ -46,12 +47,14 @@ const parseJSON = (xhr, content) => {
                       else{//else, don't add anything
                           
                       }
-                      /*const isEmpty = document.getElementById("results").innerHTML;//if nothing was added
-                      if(isEmpty == "");
-                      {
-                          document.getElementById("results").innerHTML = "<center><p>No Results.  Try refrining your search.  Want all the results? Make sure the Search bar is empty.</p></center>"; //display no results message
-                      }*/
+
                   }
+              }
+              if(searchTerm != ""){
+                      const test = document.getElementById("results").innerHTML;
+                      if(test == ""){
+                          document.getElementById("results").innerHTML = "<center><p>No results; try refining your search (don't worry, it's not case sensitive).  Want all the videos? Make sure the search box is empty!</p></center>";
+                      }
               }
               
               
@@ -203,7 +206,7 @@ const init = () => {
 <br>
       
     <form id="userForm" action="/getUsers" method="get">
-      <label for="search">Search:</label>
+      <label for="search">Search (Title Contains):</label>
       <input id="searchField" type="text" name="search" /> 
       <select id='urlField'>
         <option value='/getUsers'>/getUsers</option>
