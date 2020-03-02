@@ -12,7 +12,7 @@ const parseJSON = (xhr, content) => {
       //parse response (obj will be empty in a 204 updated)
     
       const obj = JSON.parse(xhr.response);
-      console.dir(obj.users);
+      //console.dir(obj.users);
       
       //if message in response, add to screen
       if(obj.message) {
@@ -20,26 +20,44 @@ const parseJSON = (xhr, content) => {
         p.textContent = `Message: ${obj.message}`;
         content.appendChild(p);
       }
-      
-      //if users in response, add to screen
-      if(obj.users) {
-        /*const userList = document.createElement('p');
-        const users = JSON.stringify(obj.users);
-        userList.textContent = users;
-        content.appendChild(userList);*/
-          const usernames = Object.keys(obj.users);
-          for(let username of usernames){
-              const user = obj.users[username];
-              console.log(typeof user.link);
-              console.log(user.link);
-              const uneditedLink = user.link
-              const endingLink = uneditedLink.split("https://www.youtube.com/");
-              const doneLink = "https://www.youtube.com/embed/" + endingLink[1];
-              document.getElementById("results").innerHTML += "<center><section id='card'><section id='title'>" + user.name + "</section><section id='video'><iframe width='420' height='315' src='" + doneLink + "'></iframe></section><section id ='descript'><a href='" + user.link + "'>Watch on Youtube</a><p>" + user.desc +"</p></section></section><br><br></center>";
-          }
-      }
+      const searchThis = document.querySelector('#searchField');
+      const searchTerm = searchThis.value;
     
-
+      //if users in response, add to screen
+          if(obj.users) {
+              document.getElementById("results").innerHTML = "";
+              const usernames = Object.keys(obj.users);
+              for(let username of usernames){
+                  const user = obj.users[username];
+                  if(searchTerm == ""){
+                      const uneditedLink = user.link
+                      const endingLink = uneditedLink.split("https://www.youtube.com/watch?v=");
+                      const doneLink = "https://www.youtube.com/embed/" + endingLink[1];
+                      document.getElementById("results").innerHTML += "<center><div id='card'><div id='title'>" + user.name + "</div><div id='video'><iframe type='text/html' width='640' height='360' src='" + doneLink + "'></iframe></div><div id ='descript'><a href='" + user.link + "'>Watch on Youtube</a><p>" + user.desc +"</p></div></div><br><br></center>";
+                  }else{//if there is something in the search box
+                      const originalString = user.name;
+                      const checkString = originalString.toLowerCase();
+                      if(checkString.includes(searchTerm)){//if it includes the search term, add it
+                          const uneditedLink = user.link
+                            const endingLink = uneditedLink.split("https://www.youtube.com/watch?v=");
+                            const doneLink = "https://www.youtube.com/embed/" + endingLink[1];
+                            document.getElementById("results").innerHTML += "<center><div id='card'><div id='title'>" + user.name + "</div><div id='video'><iframe type='text/html' width='640' height='360' src='" + doneLink + "'></iframe></div><div id ='descript'><a href='" + user.link + "'>Watch on Youtube</a><p>" + user.desc +"</p></div></div><br><br></center>";
+                      }
+                      else{//else, don't add anything
+                          
+                      }
+                      /*const isEmpty = document.getElementById("results").innerHTML;//if nothing was added
+                      if(isEmpty == "");
+                      {
+                          document.getElementById("results").innerHTML = "<center><p>No Results.  Try refrining your search.  Want all the results? Make sure the Search bar is empty.</p></center>"; //display no results message
+                      }*/
+                  }
+              }
+              
+              
+          }
+   
+    
 
     };
 
@@ -124,7 +142,7 @@ const sendAjax = (e) => {
       e.preventDefault();
       //create a new xhr (ajax) request. 
       const urlField = document.querySelector('#urlField');
-      const methodSelect = document.querySelector('#methodSelect')
+      const methodSelect = document.querySelector('#methodSelect');
       const urlAction = urlField.value;
       const selectAction = methodSelect.value;
       
@@ -160,6 +178,7 @@ const init = () => {
       //attach submit event (for clicking submit or hitting enter)
       nameForm.addEventListener('submit', addUser);
       userForm.addEventListener('submit', getUser);
+    
     };
 
     window.onload = init;
@@ -171,18 +190,21 @@ const init = () => {
     <center>
     <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fblankonblank.org%2Fwp-content%2Fuploads%2F2014%2F02%2FLarge_Play_Button_Red.png&f=1&nofb=1" width="20%" height="20%"></center>
   <section id="top">
-    <h3>You Tube Video Sharer</h3>
+    <h3>YouTube Video Sharer</h3>
     <form id="nameForm" action="/addUser" method="post">
       <label for="name">Title: </label>
-      <input id="nameField" type="text" name="name" />
+      <input id="nameField" type="text" name="name" value="Example Title"/>
       <label for="link">Video URL: </label>
-      <input id="linkField" type="text" name="link"/>
+      <input id="linkField" type="text" name="link" value="https://www.youtube.com/watch?v=-tWtx1xDSXU"/>
       <label for="desc">Short Description: </label>
-      <input id="descField" type="text" name="desc" maxlength="100"/>
+      <input id="descField" type="text" name="desc" maxlength="100" value="Example Description Under 100 Characters"/>
       <input type="submit" value="Add User" id="inputBut"/>
     </form>
-      <p></p>
+<br>
+      
     <form id="userForm" action="/getUsers" method="get">
+      <label for="search">Search:</label>
+      <input id="searchField" type="text" name="search" /> 
       <select id='urlField'>
         <option value='/getUsers'>/getUsers</option>
         <!--<option value='/notReal'>/notReal</option>-->
@@ -191,11 +213,13 @@ const init = () => {
         <option value="get">GET</option>
         <option value="head">HEAD</option>
       </select>
-      <input type="submit" value="Get User"/>
+      <input type="submit" value="Display Results"/>
     </form>
   </section>
   <section id="content">
   </section>
+    <br>
+    <br>
   <section id="results">
   </section>
 </section>

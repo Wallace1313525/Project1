@@ -3,7 +3,7 @@ html, body {
   width: auto;
   margin: 0;
   padding: 0;
-    background-size: cover;
+  background-size: cover;
   background-image: linear-gradient(orange, yellow, orange);
 }
 
@@ -14,6 +14,11 @@ html, body {
 
 #top h1 {
   font-size: 2em;
+}
+
+#top h3{
+    font-size: 45px;
+    font-family: fantasy;
 }
 
 #content {
@@ -32,14 +37,17 @@ html, body {
 }
 
 #card{
-    width: 460px;
-    height: 500px;
-    background-color: aqua;
+    width: 640px;
+    height: auto;
+    background-color: rgba(255, 179, 150,.8);
+    border-radius: 25px;
+    padding: 20px;
 }
 
+
 #title{
-    color: #ff0000;
-    width: 460px;
+    color: #000000;
+    width: 640px;
     text-align: center;
     font-size: 30px;
 }
@@ -49,7 +57,6 @@ html, body {
 }
 
 #descript{
-    width: 460px;
-    margin: 20px;
+    width: 640px;
     text-align: center;
 }
